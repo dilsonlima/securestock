@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizar Item</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="p-6 bg-gray-50">
+  <h1 class="text-2xl font-bold mb-4">{{.Nome}}</h1>
+  <p>Consumo diário: {{.ConsumoDiario}}</p>
+  <p>Lead Time: {{.LeadTimeDias}} dias</p>
+  <p>Estoque de Segurança: {{.EstoqueSeguranca}}</p>
+  <p>Estoque Mínimo: {{.EstoqueMinimo}}</p>
+  <p>Ponto de Recompra: {{.PontoDeRecompra}}</p>
+
+  <canvas id="grafico" width="600" height="300" class="mt-6"></canvas>
+
+  <script>
+    const ctx = document.getElementById('grafico').getContext('2d');
+    const dias = [...Array(61).keys()];
+    const consumoDiario = {{.ConsumoDiario}};
+    const estoqueInicial = {{.PontoDeRecompra}} + 20;
+    const dados = dias.map(d => Math.max(estoqueInicial - d * consumoDiario, 0));
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dias,
+        datasets: [{
+          label: 'Nível de Estoque',
+          data: dados,
+          borderColor: 'blue',
+          fill: false,
+        }]
+      },
+      options: {
+        plugins: {
+          annotation: {
+            annotations: {
+              estoqueMinimo: {
+                type: 'line',
+                yMin: {{.EstoqueMinimo}},
+                yMax: {{.EstoqueMinimo}},
+                borderColor: 'orange',
+                borderWidth: 2,
+                label: {
+                  content: 'Estoque Mínimo',
+                  enabled: true
+                }
+              },
+              pontoRecompra: {
+                type: 'line',
+                yMin: {{.PontoDeRecompra}},
+                yMax: {{.PontoDeRecompra}},
+                borderColor: 'green',
+                borderWidth: 2,
+                label: {
+                  content: 'Ponto de Recompra',
+                  enabled: true
+                }
+              },
+              seguranca: {
+                type: 'line',
+                yMin: {{.EstoqueSeguranca}},
+                yMax: {{.EstoqueSeguranca}},
+                borderColor: 'red',
+                borderWidth: 2,
+                label: {
+                  content: 'Estoque de Segurança',
+                  enabled: true
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

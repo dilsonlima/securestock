@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Estoque - Itens</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="p-6 bg-gray-100">
+  <h1 class="text-2xl font-bold mb-4">Itens Cadastrados</h1>
+  <a href="/new" class="bg-blue-500 text-white px-4 py-2 rounded">Novo Item</a>
+  <ul class="mt-4">
+    {{range .}}
+      <li class="mt-2">
+        <a class="text-blue-600 underline" href="/view?id={{.ID}}">{{.Nome}}</a>
+      </li>
+    {{end}}
+  </ul>
+</body>
+</html>
