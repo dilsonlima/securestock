@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Visualizar Item</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
 </head>
 <body class="p-6 bg-gray-50">
   <h1 class="text-2xl font-bold mb-4">{{.Nome}}</h1>
@@ -15,6 +16,10 @@
   <p>Ponto de Recompra: {{.PontoDeRecompra}}</p>
 
   <canvas id="grafico" width="600" height="300" class="mt-6"></canvas>
+
+  <a href="/edit?id={{.ID}}">Editar</a> |
+  <a href="/delete?id={{.ID}}" onclick="return confirm('Deseja excluir este item?')">Excluir</a> |
+  <a href="/">Voltar</a>
 
   <script>
     const ctx = document.getElementById('grafico').getContext('2d');

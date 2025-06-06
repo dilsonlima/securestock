@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Estoque - Itens</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Itens de Estoque</title>
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body class="p-6 bg-gray-100">
-  <h1 class="text-2xl font-bold mb-4">Itens Cadastrados</h1>
-  <a href="/new" class="bg-blue-500 text-white px-4 py-2 rounded">Novo Item</a>
-  <ul class="mt-4">
-    {{range .}}
-      <li class="mt-2">
-        <a class="text-blue-600 underline" href="/view?id={{.ID}}">{{.Nome}}</a>
-      </li>
-    {{end}}
-  </ul>
+<body>
+  <h1>Itens Cadastrados</h1>
+  <a class="btn" href="/new">+ Novo Item</a>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome do Item</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .}}
+      <tr>
+        <td>{{.ID}}</td>
+        <td>{{.Nome}}</td>
+        <td>
+          <a class="btn" href="/view?id={{.ID}}">Ver</a>
+          <a class="btn" href="/edit?id={{.ID}}">Editar</a>
+          <a class="btn btn-danger" href="/delete?id={{.ID}}" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
 </body>
 </html>
